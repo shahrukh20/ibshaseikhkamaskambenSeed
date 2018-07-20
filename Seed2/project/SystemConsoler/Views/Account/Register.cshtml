@@ -1,0 +1,161 @@
+﻿@model SystemConsoler.Models.AccountRegistrationModel
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@Html.Partial("_Scripts")*@
+@if (@Model is HelperResult)
+{
+    @Model
+}
+
+<div id="content">
+    <h1> Registration User</h1>
+    <div class="box box-danger">
+        <div class="box-header with-border">
+
+        </div>
+        <div class="box-body">
+            <form action="@Url.Action("Register", "account")" method="Post" id="smart-form-register" class="smart-form client-form">
+                <div class="">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danager alert", Style = "color:red;" })
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Name:
+                        </label>
+                        <div class="col-md-4">
+                            <input type="text" id="UserName" value="@ViewBag.UserName" required name="UserName" placeholder="User Name" class="form-control" />
+                            <b class="tooltip tooltip-bottom-right">UserName</b>
+                            @Html.ValidationMessage("UserName", "", new { Style = "color:red;" })
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            First Name:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.FirstName, new { placeholder = "First Name", @class = "form-control" })
+                            <b class="tooltip tooltip-bottom-right">First Name</b>
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Last Name:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.LastName, new { placeholder = "Last Name", @class = "form-control" })
+                            <b class="tooltip tooltip-bottom-right">Last Name</b>
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Country Code:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBox("CountryCode",null, new { placeholder = "Country Code", @class = "form-control", @required = "required" })
+                            <b class="tooltip tooltip-bottom-right">Country Code</b>
+                            @Html.ValidationMessage("CountryCode", "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Address:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Address, new { placeholder = "Address", @class = "form-control" })
+                            <b class="tooltip tooltip-bottom-right">Complete Address</b>
+                            @Html.ValidationMessageFor(model => model.Address, "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Phone No:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.PhoneNo, new { placeholder = "Phone Number", type = "number", @maxLength = "11", @minLength = "11", @class = "form-control" })
+                            <b class="tooltip tooltip-bottom-right">Phone Number</b>
+                            @Html.ValidationMessageFor(model => model.PhoneNo, "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Email:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Email, new { placeholder = "Email Address", type = "email", @class = "No-Validate form-control" })
+                            <b class="tooltip tooltip-bottom-right">Email Address</b>
+                            @Html.ValidationMessageFor(model => model.Email, "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Password:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.PasswordFor(model => model.Password, new { placeholder = "Password", @class = "form-control" })
+                            <b class="tooltip tooltip-bottom-right">Password</b>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { Style = "color:red;" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Confirm Password:
+                        </label>
+                        <div class="col-md-4">
+                            @Html.PasswordFor(model => model.PasswordConfirm, new { placeholder = "Confirm Password", @class = "form-control" })
+                            <b class="tooltip tooltip-bottom-right">Re-enter your password</b>
+                            @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { Style = "color:red;" })
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-2">
+                            Is Active?
+                        </label>
+                        <div class="col-md-4">
+                            <input type="checkbox" id="IsActive" value="true" name="IsActive" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-8 col-md-2">
+                            <input type="submit" value="Add" class="btn btn-primary btn-block btn-flat" />
+
+                        </div>
+                        <div class="col-md-2">
+                            <input type="button" onclick="window.location='/Account/UserListing'" value="Back to list" class="btn btn-danger btn-block btn-flat" />
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
