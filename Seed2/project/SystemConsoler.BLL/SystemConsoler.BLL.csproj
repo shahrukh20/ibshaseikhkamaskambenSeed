@@ -91,10 +91,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ConsolerContext.cs" />
+    <Compile Include="Context\IdentityConfig.cs" />
     <Compile Include="Enum\Enumeration.cs" />
     <Compile Include="Migrations\201807191114245_IdentityModels.cs" />
     <Compile Include="Migrations\201807191114245_IdentityModels.Designer.cs">
       <DependentUpon>201807191114245_IdentityModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807231904153_aa.cs" />
+    <Compile Include="Migrations\201807231904153_aa.Designer.cs">
+      <DependentUpon>201807231904153_aa.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\User.cs" />
@@ -124,6 +129,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807191114245_IdentityModels.resx">
       <DependentUpon>201807191114245_IdentityModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807231904153_aa.resx">
+      <DependentUpon>201807231904153_aa.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,7 @@ namespace SystemConsoler.PController
         internal ApplicationSignInManager _signInManager;
         internal ApplicationUserManager _userManager;
         ConsolerContext db = new ConsolerContext();
+     
 
         public ApplicationSignInManager SignInManager
         {

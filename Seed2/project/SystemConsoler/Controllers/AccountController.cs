@@ -21,14 +21,14 @@ namespace SystemConsoler.Controllers
     //[Authorize]
     public class AccountController : IdentityController
     {
-      
+
 
         public AccountController()
         {
         }
 
-     
-      
+
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -49,28 +49,35 @@ namespace SystemConsoler.Controllers
             {
                 return View(model);
             }
-
+            try
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            ApplicationUser signedUser = UserManager.FindByEmail(model.PhoneNo);
-            var result = await SignInManager.PasswordSignInAsync(signedUser.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            //var result = await SignInManager.PasswordSignInAsync(model.PhoneNo, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
             {
-                case SignInStatus.Success:
-                    if (string.IsNullOrEmpty(returnUrl))
-                        return RedirectToLocal(returnUrl);
-                    else
-                        return RedirectToAction("SalesOrders", "index");
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                Models.ApplicationUser signedUser = UserManager.FindByEmail(model.UserName_PhoneNumber);
+                var result = await SignInManager.PasswordSignInAsync(signedUser.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                //var result = await SignInManager.PasswordSignInAsync(model.PhoneNo, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        if (string.IsNullOrEmpty(returnUrl))
+                            return RedirectToLocal(returnUrl);
+                        else
+                            return RedirectToAction("SalesOrders", "index");
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
             }
+            catch (Exception e)
+            {
+
+            }
+            return RedirectToLocal(returnUrl);
         }
 
         //
@@ -121,22 +128,23 @@ namespace SystemConsoler.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            //BindDropdowns();
+            ViewBag.Name = new SelectList(db.Roles.ToList(), "Name", "Name");
             return View();
         }
-      
+
         private ConsolerContext db = new ConsolerContext();
         //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Register(AccountRegistrationModel model)
+        public async Task<ActionResult> Register(AccountRegistrationModel model,string Name)
         {
+            ViewBag.Name = new SelectList(db.Roles.ToList(), "Name", "Name");
             //BindDropdowns();
             var isUserExist = UserManager.FindByEmail(model.PhoneNo);
             if (ModelState.IsValid && isUserExist == null)
             {
-                var user = new ApplicationUser
+                var user = new Models.ApplicationUser
                 {
                     UserName = model.FirstName,
                     Email = model.PhoneNo,
@@ -146,6 +154,7 @@ namespace SystemConsoler.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await this.UserManager.AddToRoleAsync(user.Id, Name);
                     #region Start Application Logins
                     try
                     {
@@ -157,7 +166,7 @@ namespace SystemConsoler.Controllers
                             CreatedBy = 1,
                             CreatedOn = DateTime.Now,
                             ApplicationUser = (int)user.Id,
-                            Name = user.UserName
+                            Name = user.UserName, FirstName = model.FirstName, LastName = model.LastName
                         });
                         db.SaveChanges();
                     }
@@ -379,7 +388,7 @@ namespace SystemConsoler.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Models.ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

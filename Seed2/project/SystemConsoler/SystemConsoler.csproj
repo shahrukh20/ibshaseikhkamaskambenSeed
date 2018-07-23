@@ -261,6 +261,9 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -275,6 +278,8 @@
     <Compile Include="CommonClasses\CommonFunctions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="CustomFilters\AuthLogAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Migrations\201807191112299_IdentityModels.cs" />
     <Compile Include="Migrations\201807191112299_IdentityModels.Designer.cs">
